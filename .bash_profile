@@ -120,7 +120,27 @@ SELECTED_EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
 # -->
 #export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] ${SELECTED_EMOJI}"
 
-export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
+#export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
+
+#messing with highlighting
+#export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\[\033[36m\]\D{%T}\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
+
+#PS1='$(printf "%*s\r%s" $(( COLUMNS-1 )) "[$(git branch 2>/dev/null | grep '^*' | sed s/..//)] $(date +%H:%M:%S)" "\u@\h:$PWD$ ")'
+
+blue=$(tput bold; tput setaf 4; tput setab 7)
+PURPLE=$(tput bold; tput setaf 125; tput setab 7)
+
+asdf=2
+columns=$(expr $COLUMNS + 34)
+
+rightprompt()
+{
+    printf "%*s" $columns "${blue}$(parse_git_branch) ${PURPLE}$(date +"%T ")"
+}
+#printf "%*s" $columns "${blue}$(parse_git_branch) ${PURPLE}$dateVar"
+
+PS1='\[$(tput sc; rightprompt; tput rc)\]\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] '
+
 
 #switch yellow and green from above
 #export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[33m\]\h:\[\033[32;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
@@ -142,3 +162,4 @@ alias cpu='top -u'
 alias mem='top -o MEM'
 alias devices='arp -a'
 alias root='sudo su'
+alias touchbar='sudo pkill TouchBarServer'
