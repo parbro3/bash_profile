@@ -75,7 +75,7 @@ alias .6='cd ../../../../../../ && ls'            # Go back 6 directory levels
 #Opens any file in MacOS Quicklook Preview
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           
 
-alias c='clear'
+alias c='src; clear'
 
 #*************************************************Random commands******************************************************
 #open a finder in the current directory
@@ -122,22 +122,17 @@ SELECTED_EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
 
 #export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
 
-#messing with highlighting
-#export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\[\033[36m\]\D{%T}\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
-
 #PS1='$(printf "%*s\r%s" $(( COLUMNS-1 )) "[$(git branch 2>/dev/null | grep '^*' | sed s/..//)] $(date +%H:%M:%S)" "\u@\h:$PWD$ ")'
 
-blue=$(tput bold; tput setaf 4; tput setab 7)
-PURPLE=$(tput bold; tput setaf 125; tput setab 7)
+branchColor=$(tput bold; tput setaf 4; tput setab 7)
+dateColor=$(tput bold; tput setaf 125; tput setab 7)
 
-asdf=2
 columns=$(expr $COLUMNS + 34)
 
 rightprompt()
 {
-    printf "%*s" $columns "${blue}$(parse_git_branch) ${PURPLE}$(date +"%T ")"
+    printf "%*s" $columns "${branchColor}$(parse_git_branch) ${dateColor}$(date +"%T ")"
 }
-#printf "%*s" $columns "${blue}$(parse_git_branch) ${PURPLE}$dateVar"
 
 PS1='\[$(tput sc; rightprompt; tput rc)\]\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] '
 
