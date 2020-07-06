@@ -150,6 +150,8 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 alias ls='ls -GFh'
 
+#*************************************************Warnings******************************************************
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 #*************************************************Networking******************************************************
 alias ports='sudo lsof -i | grep LISTEN'
