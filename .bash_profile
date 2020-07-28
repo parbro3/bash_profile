@@ -75,7 +75,8 @@ alias .6='cd ../../../../../../ && ls'            # Go back 6 directory levels
 #Opens any file in MacOS Quicklook Preview
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           
 
-alias c='src; clear'
+alias c='clear'
+alias cc='src; clear'
 
 #*************************************************Random commands******************************************************
 #open a finder in the current directory
