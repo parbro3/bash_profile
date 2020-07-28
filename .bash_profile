@@ -75,7 +75,7 @@ alias .6='cd ../../../../../../ && ls'            # Go back 6 directory levels
 #Opens any file in MacOS Quicklook Preview
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           
 
-alias c='clear'
+alias c='src; clear'
 
 #*************************************************Random commands******************************************************
 #open a finder in the current directory
@@ -120,7 +120,22 @@ SELECTED_EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
 # -->
 #export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] ${SELECTED_EMOJI}"
 
-export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
+#export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
+
+#PS1='$(printf "%*s\r%s" $(( COLUMNS-1 )) "[$(git branch 2>/dev/null | grep '^*' | sed s/..//)] $(date +%H:%M:%S)" "\u@\h:$PWD$ ")'
+
+branchColor=$(tput bold; tput setaf 4; tput setab 7)
+dateColor=$(tput bold; tput setaf 125; tput setab 7)
+
+columns=$(expr $COLUMNS + 34)
+
+rightprompt()
+{
+    printf "%*s" $columns "${branchColor}$(parse_git_branch) ${dateColor}$(date +"%T ")"
+}
+
+PS1='\[$(tput sc; rightprompt; tput rc)\]\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] '
+
 
 #switch yellow and green from above
 #export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[33m\]\h:\[\033[32;1m\]\w\[\033[35m\]\$(parse_git_branch)\n\[\033[36m\]└───\[\033[36m\]▶\[\033[0m\] "
@@ -135,6 +150,8 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 alias ls='ls -GFh'
 
+#*************************************************Warnings******************************************************
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 #*************************************************Networking******************************************************
 alias ports='sudo lsof -i | grep LISTEN'
@@ -142,3 +159,4 @@ alias cpu='top -u'
 alias mem='top -o MEM'
 alias devices='arp -a'
 alias root='sudo su'
+alias touchbar='sudo pkill TouchBarServer'
