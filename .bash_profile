@@ -30,7 +30,7 @@ pingAll () {
 
 #activates git completion
 if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
+  source ~/.git-completion.bash
 fi
 
 #Overrides method in git completion for local branches only.
